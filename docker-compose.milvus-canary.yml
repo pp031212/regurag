@@ -1,0 +1,8 @@
+services:
+  backend-api:
+    environment:
+      VECTOR_STORE_BACKEND: milvus
+
+  backend-worker:
+    environment:
+      VECTOR_STORE_BACKEND: milvus

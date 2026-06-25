@@ -1,0 +1,48 @@
+{
+  "_comment": "新业务 profile 的知识库自动路由模板：定义业务域关键词、分类词、知识库规则和路由打分参数。",
+  "_profile_comment": "先从 domains / categories / knowledge_base_rules 三块开始填，能不用规则的地方先保持简单。",
+  "domains": {
+    "domain_a": ["关键词1", "关键词2"],
+    "domain_b": ["关键词3", "关键词4"]
+  },
+  "categories": {
+    "category_a": ["术语1", "术语2"],
+    "category_b": ["术语3", "术语4"]
+  },
+  "knowledge_base_rules": [
+    {
+      "name": "kb_rule_a",
+      "match_any": ["知识库名称或主题"],
+      "category": "category_a",
+      "aliases": ["用户常见叫法"],
+      "priority_terms": ["高优先关键词"],
+      "exclude_terms": ["排除词"],
+      "query_rules": [
+        {
+          "name": "rule_example",
+          "all_of": ["必须同时出现的词"],
+          "any_of": ["至少出现一个的词"],
+          "none_of": ["不应出现的词"],
+          "boost": 10
+        }
+      ]
+    }
+  ],
+  "scores": {
+    "keyword_match": 8,
+    "metadata_term_min": 2,
+    "metadata_term_max": 6,
+    "preferred_knowledge_base": 2,
+    "category_match": 10,
+    "keep_requested_margin": 3,
+    "knowledge_base_alias_match": 12,
+    "knowledge_base_priority_match": 6,
+    "knowledge_base_exclude_penalty": 12
+  },
+  "embedding": {
+    "enabled": true,
+    "min_similarity": 0.45,
+    "min_margin": 0.03,
+    "profile_document_limit": 8
+  }
+}

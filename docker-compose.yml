@@ -1,0 +1,196 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: regurag-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: regurag
+      MYSQL_USER: regurag
+      MYSQL_PASSWORD: regurag123
+      MYSQL_ROOT_PASSWORD: "1234"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/sql/init_mysql.sql:/docker-entrypoint-initdb.d/init_mysql.sql:ro
+    ports:
+      - "13306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: regurag-redis
+    restart: unless-stopped
+    ports:
+      - "16379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  milvus-etcd:
+    image: quay.io/coreos/etcd:v3.5.18
+    container_name: regurag-milvus-etcd
+    restart: unless-stopped
+    environment:
+      ETCD_AUTO_COMPACTION_MODE: revision
+      ETCD_AUTO_COMPACTION_RETENTION: "1000"
+      ETCD_QUOTA_BACKEND_BYTES: "4294967296"
+      ETCD_SNAPSHOT_COUNT: "50000"
+    command:
+      - etcd
+      - -advertise-client-urls=http://milvus-etcd:2379
+      - -listen-client-urls=http://0.0.0.0:2379
+      - --data-dir=/etcd
+    volumes:
+      - milvus_etcd:/etcd
+
+  milvus-minio:
+    image: minio/minio:RELEASE.2024-12-18T13-15-44Z
+    container_name: regurag-milvus-minio
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: minio server /minio_data
+    volumes:
+      - milvus_minio:/minio_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  milvus-standalone:
+    image: milvusdb/milvus:v2.6.14
+    container_name: regurag-milvus-standalone
+    restart: unless-stopped
+    command: ["milvus", "run", "standalone"]
+    depends_on:
+      milvus-etcd:
+        condition: service_started
+      milvus-minio:
+        condition: service_healthy
+    environment:
+      ETCD_ENDPOINTS: milvus-etcd:2379
+      MINIO_ADDRESS: milvus-minio:9000
+    volumes:
+      - milvus_data:/var/lib/milvus
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+
+  backend-api:
+    image: regurag-backend:local
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: regurag-backend-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      APP_ENV: production
+      APP_HOST: 0.0.0.0
+      APP_PORT: 8000
+      APP_DEBUG: "false"
+      API_V1_PREFIX: /api/v1
+      DATABASE_URL: mysql+pymysql://regurag:regurag123@mysql:3306/regurag?charset=utf8mb4
+      TASK_QUEUE_BACKEND: redis
+      REDIS_URL: redis://redis:6379/0
+      CHROMA_PATH: /app/backend/chroma_db
+      UPLOADS_DIR: /app/backend/data/uploads
+      VECTOR_STORE_BACKEND: chroma
+      VECTOR_STORE_MILVUS_URI: http://milvus-standalone:19530
+      CORS_ALLOW_ORIGINS: http://localhost:5173,http://127.0.0.1:5173,http://localhost:8080
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?OPENAI_API_KEY is required}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      REWRITE_API_KEY: ${REWRITE_API_KEY:?REWRITE_API_KEY is required}
+      REWRITE_BASE_URL: ${REWRITE_BASE_URL:-https://api.openai.com/v1}
+      REWRITE_MODEL: ${REWRITE_MODEL:-gpt-4.1-mini}
+      SHADOW_MILVUS_URI: http://milvus-standalone:19530
+      SHADOW_MILVUS_DROP_OLD: "false"
+      BOOTSTRAP_DEFAULT_KNOWLEDGE_BASE: "false"
+      HF_HOME: /opt/model-cache/huggingface
+      TRANSFORMERS_CACHE: /opt/model-cache/huggingface
+      PYTHONPATH: /app/backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+      - backend_uploads:/app/backend/data/uploads
+      - backend_chroma:/app/backend/chroma_db
+      - backend_model_cache:/opt/model-cache
+
+  backend-worker:
+    image: regurag-backend:local
+    container_name: regurag-backend-worker
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend-api:
+        condition: service_started
+    environment:
+      APP_ENV: production
+      APP_HOST: 0.0.0.0
+      APP_PORT: 8000
+      APP_DEBUG: "false"
+      API_V1_PREFIX: /api/v1
+      DATABASE_URL: mysql+pymysql://regurag:regurag123@mysql:3306/regurag?charset=utf8mb4
+      TASK_QUEUE_BACKEND: redis
+      REDIS_URL: redis://redis:6379/0
+      CHROMA_PATH: /app/backend/chroma_db
+      UPLOADS_DIR: /app/backend/data/uploads
+      VECTOR_STORE_BACKEND: chroma
+      VECTOR_STORE_MILVUS_URI: http://milvus-standalone:19530
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?OPENAI_API_KEY is required}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+      REWRITE_API_KEY: ${REWRITE_API_KEY:?REWRITE_API_KEY is required}
+      REWRITE_BASE_URL: ${REWRITE_BASE_URL:-https://api.openai.com/v1}
+      REWRITE_MODEL: ${REWRITE_MODEL:-gpt-4.1-mini}
+      SHADOW_MILVUS_URI: http://milvus-standalone:19530
+      SHADOW_MILVUS_DROP_OLD: "false"
+      BOOTSTRAP_DEFAULT_KNOWLEDGE_BASE: "false"
+      HF_HOME: /opt/model-cache/huggingface
+      TRANSFORMERS_CACHE: /opt/model-cache/huggingface
+      PYTHONPATH: /app/backend
+    command: ["python", "-m", "app.workers.task_worker"]
+    volumes:
+      - ./backend:/app/backend
+      - backend_uploads:/app/backend/data/uploads
+      - backend_chroma:/app/backend/chroma_db
+      - backend_model_cache:/opt/model-cache
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: regurag-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend-api
+    ports:
+      - "8080:80"
+
+volumes:
+  mysql_data:
+  redis_data:
+  milvus_etcd:
+  milvus_minio:
+  milvus_data:
+  backend_uploads:
+  backend_chroma:
+  backend_model_cache:

@@ -1,0 +1,42 @@
+{
+  "_comment": "文档分段策略配置：用于根据文档结构特征选择规章制度、法律条文或通用段落切分方式。",
+  "default_strategy": "generic_paragraph",
+  "default_sentence_profile": "generic_sentence",
+  "strategies": [
+    {
+      "name": "law_article",
+      "detection_patterns": [
+        "第[一二三四五六七八九十百千0-9]+条"
+      ],
+      "min_detection_matches": 2,
+      "boundary_pattern": "(?m)(?=^(?:第[一二三四五六七八九十百千0-9]+条)(?:\\s|$))"
+    },
+    {
+      "name": "regulation_rule",
+      "detection_patterns": [
+        "[一二三四五六七八九十]+、",
+        "扣分处理标准如下"
+      ],
+      "min_detection_matches": 2,
+      "boundary_pattern": "(?=(?:[一二三四五六七八九十]+、)|(?:扣分处理标准如下：?))"
+    },
+    {
+      "name": "generic_paragraph",
+      "detection_patterns": [],
+      "min_detection_matches": 0,
+      "boundary_pattern": "(?:\\r?\\n\\s*){2,}"
+    }
+  ],
+  "sentence_profiles": [
+    {
+      "name": "generic_sentence",
+      "source_formats": [],
+      "boundary_pattern": "(?<=[。！？；\\n])",
+      "fallback_boundary_patterns": [
+        "(?<=[，、：:,])",
+        "(?=(?:[（(][一二三四五六七八九十0-9]+[）)]|[一二三四五六七八九十]+、|\\d+[.．、]))",
+        "(?<=[）)])"
+      ]
+    }
+  ]
+}

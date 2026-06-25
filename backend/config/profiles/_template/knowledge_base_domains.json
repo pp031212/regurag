@@ -1,0 +1,17 @@
+{
+  "_comment": "新业务 profile 的知识库业务域模板：用于定义前端可选业务域，以及后端创建知识库时允许的 domain 列表。",
+  "_profile_comment": "保持选项克制，只放当前产品真正需要区分的业务域。不要为了“以后可能会用到”提前堆很多域。",
+  "default_domain": "general",
+  "options": [
+    {
+      "value": "general",
+      "label": "通用知识",
+      "description": "尚未细分业务域时的默认选择。"
+    },
+    {
+      "value": "example_domain",
+      "label": "示例业务域",
+      "description": "替换成你自己的业务域名称和说明。"
+    }
+  ]
+}

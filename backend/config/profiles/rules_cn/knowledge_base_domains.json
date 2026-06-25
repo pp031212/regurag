@@ -1,0 +1,22 @@
+{
+  "_comment": "rules_cn 场景的知识库业务域配置：用于前端创建知识库时展示当前产品允许选择的业务域，并作为后端 domain 校验口径。",
+  "_profile_comment": "当前场景只保留对产品真正有意义的 3 个业务域；如果后续新增业务类型，请优先扩 profile 配置，而不是继续在前后端源码里写死选项。",
+  "default_domain": "general",
+  "options": [
+    {
+      "value": "general",
+      "label": "通用知识",
+      "description": "适合暂未进一步归类的制度资料，或仍在资料整理中的过渡知识库。"
+    },
+    {
+      "value": "training_management",
+      "label": "培训管理",
+      "description": "适合学员管理、请假、考勤、宿舍、奖惩、退学等培训管理制度资料。"
+    },
+    {
+      "value": "labor_law",
+      "label": "劳动法",
+      "description": "适合法律法规、劳动合同、工资、社保、辞退、补偿等劳动法律资料。"
+    }
+  ]
+}

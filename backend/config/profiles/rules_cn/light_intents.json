@@ -1,0 +1,112 @@
+{
+  "_comment": "轻量意图与离题识别配置：用于在进入检索前匹配问候、感谢、身份询问和离题问题。",
+  "_profile_comment": "该文件额外包含 rules_cn 场景常见的培训管理相关词，如班主任、学员、离校等。",
+  "policy_keywords": [
+    "规章", "制度", "规定", "规则", "要求", "流程", "申请", "审批", "处罚", "处理", "扣分", "请假", "销假",
+    "考勤", "迟到", "早退", "旷课", "宿舍", "查寝", "卫生", "奖惩", "通报", "就业", "面试", "外出", "打卡",
+    "班主任", "老师", "和鸣", "学员", "课程", "培训", "学习", "违纪", "假条", "补卡", "离校"
+  ],
+  "off_topic_patterns": [
+    "哈{2,}",
+    "呵{2,}",
+    "[hH]{3,}",
+    "今天天气怎么样",
+    "天气怎么样",
+    "天气如何",
+    "会下雨吗",
+    "新闻",
+    "热搜",
+    "讲个笑话",
+    "说个笑话",
+    "你会写代码吗",
+    "帮我写代码",
+    "写个python",
+    "写个java",
+    "1加1等于几",
+    "\\d+[加\\+\\-\\*/乘除]\\d+.*",
+    "你喜欢谁",
+    "你会唱歌吗",
+    "你会画画吗",
+    "今天几号",
+    "现在几点"
+  ],
+  "intent_rules": [
+    {
+      "name": "greeting",
+      "patterns": [
+        "hi+",
+        "hello+",
+        "hey+",
+        "你好[呀啊哦喔嘛吗呢啦]*",
+        "您好[呀啊哦喔嘛吗呢啦]*",
+        "嗨[呀啊哦喔嘛吗呢啦]*",
+        "哈喽[呀啊哦喔嘛吗呢啦]*",
+        "在吗[呀啊哦喔嘛吗呢啦]*",
+        "有人吗[呀啊哦喔嘛吗呢啦]*",
+        "早上好[呀啊哦喔嘛吗呢啦]*",
+        "中午好[呀啊哦喔嘛吗呢啦]*",
+        "下午好[呀啊哦喔嘛吗呢啦]*",
+        "晚上好[呀啊哦喔嘛吗呢啦]*"
+      ],
+      "response_key": "greeting",
+      "finish_reason": "greeting_short_circuit"
+    },
+    {
+      "name": "thanks",
+      "patterns": [
+        "谢谢",
+        "谢谢你",
+        "多谢",
+        "感谢",
+        "辛苦了",
+        "thanks",
+        "thankyou",
+        "thankyouverymuch",
+        "thx"
+      ],
+      "response_key": "thanks",
+      "finish_reason": "thanks_short_circuit"
+    },
+    {
+      "name": "farewell",
+      "patterns": [
+        "再见",
+        "拜拜",
+        "bye+",
+        "seeyou",
+        "回头见",
+        "先这样"
+      ],
+      "response_key": "farewell",
+      "finish_reason": "farewell_short_circuit"
+    },
+    {
+      "name": "identity",
+      "patterns": [
+        "你是谁",
+        "你是[呀啊哦喔嘛吗呢啦]*",
+        "你叫什么",
+        "你是什么",
+        "你是干嘛的",
+        "介绍一下你自己",
+        "whoareyou"
+      ],
+      "response_key": "identity",
+      "finish_reason": "identity_short_circuit"
+    },
+    {
+      "name": "capability",
+      "patterns": [
+        "你能做什么",
+        "你可以做什么",
+        "你会什么",
+        "怎么用你",
+        "如何使用你",
+        "help",
+        "你能帮我什么"
+      ],
+      "response_key": "capability",
+      "finish_reason": "capability_short_circuit"
+    }
+  ]
+}

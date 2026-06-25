@@ -1,0 +1,9 @@
+{
+  "_comment": "轻量意图回复模板配置：用于问候、感谢、离题等短路回复的文案模板，支持 subject 占位符。",
+  "greeting": "你好，我是 ReguRAG 助手。我可以帮你查询{subject}相关内容。你可以直接问我{examples}等问题。",
+  "thanks": "不客气，我是 ReguRAG 助手。你可以继续问我{subject}相关问题。",
+  "farewell": "再见，我是 ReguRAG 助手。之后你仍可以随时来问我{examples}等问题。",
+  "identity": "我是 ReguRAG 助手，主要用于解答{subject}相关问题。你可以直接问我{examples}。",
+  "capability": "我是 ReguRAG 助手，目前主要帮助你查询{subject}。你可以直接输入具体问题，比如“{example_query_1}”“{example_query_2}”“{example_query_3}”。",
+  "off_topic": "我是 ReguRAG 助手，目前主要回答{subject}相关问题。如果你想继续使用我，可以直接问{examples}。"
+}

@@ -1,0 +1,11 @@
+{
+  "_comment": "新业务 profile 的保守回答模板：当用户问了高风险限定场景，但证据中没有覆盖时，触发保守回答。",
+  "_profile_comment": "只把真正高风险、不能靠一般条款直接外推的限定词放进 qualifier_rules。",
+  "qualifier_rules": [
+    {
+      "name": "限定场景名",
+      "query_terms": ["用户常见说法1", "用户常见说法2"],
+      "evidence_terms": ["文档中应出现的证据词1", "文档中应出现的证据词2"]
+    }
+  ]
+}

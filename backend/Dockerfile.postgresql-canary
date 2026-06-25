@@ -1,0 +1,9 @@
+FROM regurag-backend:local
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app/backend
+
+RUN pip install --no-cache-dir \
+    "psycopg[binary]==3.3.3" \
+    "pytest==9.0.2"

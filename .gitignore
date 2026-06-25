@@ -1,0 +1,63 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Node / Vite
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.vite/
+
+# Local tooling
+.idea/
+.vscode/
+.tmp/
+tmp/
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Runtime data and generated outputs
+*.sqlite3
+backend/.chroma-write.lock
+backend/chroma_db/
+backend/data/uploads/
+backend/data/models/*
+!backend/data/models/intent_classifier.pt
+backend/evals/
+backend/evals/results/
+!backend/evals/results/.gitkeep
+backend/archive/
+docs/archive/
+
+# Local notes / exported reference pages
+测试输出.txt
+tmp_doc_sections.txt
+简历-项目经历.txt
+项目进度.md
+项目进度_Frontend.md
+19.现场追问补充.整理版.md
+和鸣教育管理制度精简chunk版.md
+你是哪个流派.png
+前端案例/
+deepseek前端案例/
+running_icon/

@@ -1,0 +1,22 @@
+{
+  "_comment": "知识库业务域选项配置：用于前端创建知识库时展示业务域下拉、后端校验 domain 合法性，以及约定默认业务域。",
+  "_profile_comment": "如果新业务场景需要不同的业务域集合，请在 profile 目录中覆盖本文件。default_domain 必须出现在 options 里。",
+  "default_domain": "general",
+  "options": [
+    {
+      "value": "general",
+      "label": "通用知识",
+      "description": "适合暂未细分业务域、或仍处在通用资料整理阶段的知识库。"
+    },
+    {
+      "value": "training_management",
+      "label": "培训管理",
+      "description": "适合培训机构规章、学员管理、请假、考勤、宿舍、纪律等制度资料。"
+    },
+    {
+      "value": "labor_law",
+      "label": "劳动法",
+      "description": "适合劳动法、劳动合同法、工资、社保、辞退、经济补偿等法律资料。"
+    }
+  ]
+}

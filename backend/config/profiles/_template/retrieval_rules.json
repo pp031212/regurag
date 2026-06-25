@@ -1,0 +1,10 @@
+{
+  "_comment": "新业务 profile 的检索后处理模板：定义政策类触发词、必须保留片段和低价值上下文过滤。",
+  "_profile_comment": "只有当你的文档里有稳定、重复出现的规则片段时，才值得填 must_keep_child_keywords 和 low_value_parent_keywords。",
+  "policy_trigger_words": ["规则词1", "规则词2"],
+  "policy_trigger_phrases": ["常见问法1", "常见问法2"],
+  "behavior_keywords": ["行为词1", "行为词2"],
+  "must_keep_child_keywords": [],
+  "low_value_parent_keywords": [],
+  "rule_signal_keywords": []
+}

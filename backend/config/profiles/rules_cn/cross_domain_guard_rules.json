@@ -1,0 +1,17 @@
+{
+  "_comment": "rules_cn 场景的跨域守卫配置：用于劳动法与培训管理混合提问时生成拆问提示。",
+  "_profile_comment": "这里的 domain_labels 和 split_question_examples 会直接影响用户看到的拆问文案。",
+  "connectors": ["分别", "和", "及", "以及", "还有", "并且", "同时"],
+  "domain_labels": {
+    "labor_law": "劳动法",
+    "training_management": "培训管理",
+    "general": "通用知识"
+  },
+  "split_question_examples": {
+    "labor_law": "离职怎么处理？",
+    "training_management": "退学怎么处理？"
+  },
+  "clarification_prefix": "这个问题同时涉及{domains}多个业务域，当前不适合直接按单一知识库回答。",
+  "clarification_question": "你是想先问{domains}中的哪一类问题？",
+  "clarification_suffix": "如果你愿意，也可以直接拆成两个问题分别提问，例如：{examples}"
+}

@@ -1,0 +1,11 @@
+{
+  "_comment": "rules_cn 场景的保守回答保护规则：当查询限定场景在证据中未被覆盖时，触发保守回答。",
+  "_profile_comment": "该文件中的 qualifier_rules 用于识别高风险限定词，避免把一般条款误答为特殊场景规则。",
+  "qualifier_rules": [
+    {
+      "name": "实习期间",
+      "query_terms": ["实习期间", "实习期", "顶岗实习", "见习期间"],
+      "evidence_terms": ["实习", "见习", "顶岗实习"]
+    }
+  ]
+}

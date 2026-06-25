@@ -1,0 +1,47 @@
+services:
+  postgresql:
+    image: postgres:17-alpine
+    container_name: regurag-postgresql
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: regurag
+      POSTGRES_USER: regurag
+      POSTGRES_PASSWORD: regurag123
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+      - ./backend/sql/init_postgresql.sql:/docker-entrypoint-initdb.d/init_postgresql.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U regurag -d regurag"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend-api:
+    image: regurag-backend-postgresql-canary:local
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.postgresql-canary
+    depends_on:
+      mysql:
+        condition: service_started
+      postgresql:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://regurag:regurag123@postgresql:5432/regurag
+      TASK_QUEUE_BACKEND: sql
+
+  backend-worker:
+    image: regurag-backend-postgresql-canary:local
+    depends_on:
+      mysql:
+        condition: service_started
+      postgresql:
+        condition: service_healthy
+      backend-api:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql+psycopg://regurag:regurag123@postgresql:5432/regurag
+      TASK_QUEUE_BACKEND: sql
+
+volumes:
+  postgresql_data:

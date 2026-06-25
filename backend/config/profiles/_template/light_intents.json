@@ -1,0 +1,14 @@
+{
+  "_comment": "新业务 profile 的轻量意图模板：定义本域问题关键词、离题短路模式和问候/感谢等规则。",
+  "_profile_comment": "policy_keywords 决定哪些问题更像“本域问题”；如果填得太宽，会降低 off-topic 短路效果。",
+  "policy_keywords": ["业务词1", "业务词2", "流程", "规则"],
+  "off_topic_patterns": ["今天天气怎么样", "讲个笑话"],
+  "intent_rules": [
+    {
+      "name": "greeting",
+      "patterns": ["hi+", "你好[呀啊哦喔嘛吗呢啦]*"],
+      "response_key": "greeting",
+      "finish_reason": "greeting_short_circuit"
+    }
+  ]
+}

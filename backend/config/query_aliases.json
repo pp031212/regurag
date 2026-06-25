@@ -1,0 +1,5 @@
+{
+  "_comment": "通用查询别名扩展配置：具体业务场景可在 profile 中覆盖。",
+  "term_aliases": {},
+  "conditional_alias_rules": []
+}

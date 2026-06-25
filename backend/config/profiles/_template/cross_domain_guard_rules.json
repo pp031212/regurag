@@ -1,0 +1,16 @@
+{
+  "_comment": "新业务 profile 的跨域守卫模板：定义连接词、领域标签和拆问提示样例。",
+  "_profile_comment": "如果你的系统只有单一业务域，这个文件可以删掉，直接回退到根目录通用配置。",
+  "connectors": ["分别", "和", "及", "以及", "还有", "并且", "同时"],
+  "domain_labels": {
+    "domain_a": "业务域A",
+    "domain_b": "业务域B"
+  },
+  "split_question_examples": {
+    "domain_a": "业务域A示例问题？",
+    "domain_b": "业务域B示例问题？"
+  },
+  "clarification_prefix": "这个问题同时涉及{domains}多个业务域，当前不适合直接按单一知识库回答。",
+  "clarification_question": "你是想先问{domains}中的哪一类问题？",
+  "clarification_suffix": "如果你愿意，也可以直接拆成多个问题分别提问，例如：{examples}"
+}

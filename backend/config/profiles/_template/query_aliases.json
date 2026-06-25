@@ -1,0 +1,16 @@
+{
+  "_comment": "新业务 profile 的查询别名模板：把用户口语化问法扩展成更贴近知识库原文的检索词。",
+  "_profile_comment": "term_aliases 适合稳定术语映射；conditional_alias_rules 适合需要多个条件同时成立的复杂扩展。",
+  "term_aliases": {
+    "口语词": ["原文术语1", "原文术语2"]
+  },
+  "conditional_alias_rules": [
+    {
+      "match_all": [
+        ["条件词组A1", "条件词组A2"],
+        ["条件词组B1", "条件词组B2"]
+      ],
+      "aliases": ["满足条件后补充的检索词"]
+    }
+  ]
+}

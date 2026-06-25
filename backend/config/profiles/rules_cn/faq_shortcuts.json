@@ -1,0 +1,117 @@
+{
+  "_comment": "rules_cn 场景下的 FAQ / 高频问法短路规则。",
+  "rules": [
+    {
+      "name": "leave_policy_overview",
+      "patterns": [
+        "请假制度",
+        "请假制度是什么",
+        "请假制度有哪些",
+        "请假规则",
+        "请假怎么规定",
+        "请假有哪些规定"
+      ],
+      "topic": "请假制度",
+      "answer_template": "如果你想了解“{topic}”的整体规则，建议直接追问具体环节，这样我能给你更稳定的答案。你可以继续问：“{example_query_1}”“{example_query_2}”“{example_query_3}”。",
+      "suggested_queries": [
+        "请假流程是什么",
+        "请假需要提前多久",
+        "补假怎么处理"
+      ],
+      "finish_reason": "faq_short_circuit"
+    },
+    {
+      "name": "attendance_policy_overview",
+      "patterns": [
+        "考勤制度",
+        "考勤制度是什么",
+        "考勤制度有哪些",
+        "考勤规则",
+        "考勤怎么规定",
+        "考勤有哪些规定"
+      ],
+      "topic": "考勤制度",
+      "answer_template": "如果你想了解“{topic}”的整体规则，建议直接追问具体环节，这样我能给你更稳定的答案。你可以继续问：“{example_query_1}”“{example_query_2}”“{example_query_3}”。",
+      "suggested_queries": [
+        "迟到会怎么处理",
+        "旷课怎么认定",
+        "补卡或补签怎么处理"
+      ],
+      "finish_reason": "faq_short_circuit"
+    },
+    {
+      "name": "dormitory_policy_overview",
+      "patterns": [
+        "宿舍制度",
+        "宿舍制度是什么",
+        "宿舍制度有哪些",
+        "宿舍规则",
+        "宿舍怎么规定",
+        "宿舍有哪些规定"
+      ],
+      "topic": "宿舍制度",
+      "answer_template": "如果你想了解“{topic}”的整体规则，建议直接追问具体环节，这样我能给你更稳定的答案。你可以继续问：“{example_query_1}”“{example_query_2}”“{example_query_3}”。",
+      "suggested_queries": [
+        "宿舍违规会怎么处理",
+        "晚归怎么认定",
+        "宿舍卫生要求是什么"
+      ],
+      "finish_reason": "faq_short_circuit"
+    },
+    {
+      "name": "reward_discipline_overview",
+      "patterns": [
+        "奖惩制度",
+        "奖惩制度是什么",
+        "奖惩制度有哪些",
+        "奖惩规则",
+        "奖惩怎么规定",
+        "奖惩有哪些规定"
+      ],
+      "topic": "奖惩制度",
+      "answer_template": "如果你想了解“{topic}”的整体规则，建议直接追问具体环节，这样我能给你更稳定的答案。你可以继续问：“{example_query_1}”“{example_query_2}”“{example_query_3}”。",
+      "suggested_queries": [
+        "扣分标准有哪些",
+        "累计扣分会怎么处理",
+        "哪些行为会被记过"
+      ],
+      "finish_reason": "faq_short_circuit"
+    },
+    {
+      "name": "labor_law_overview",
+      "patterns": [
+        "劳动法",
+        "劳动法是什么",
+        "劳动法有哪些规定",
+        "劳动法怎么规定",
+        "劳动法主要规定什么"
+      ],
+      "topic": "劳动法",
+      "answer_template": "如果你想了解“{topic}”的整体规则，建议直接追问具体条款或具体场景，这样我能给你更稳定的答案。你可以继续问：“{example_query_1}”“{example_query_2}”“{example_query_3}”。",
+      "suggested_queries": [
+        "试用期最长多久",
+        "辞退员工需要满足什么条件",
+        "加班工资怎么计算"
+      ],
+      "finish_reason": "faq_short_circuit"
+    },
+    {
+      "name": "labor_contract_law_overview",
+      "patterns": [
+        "劳动合同法",
+        "劳动合同法是什么",
+        "劳动合同法有哪些规定",
+        "劳动合同法怎么规定",
+        "劳动合同法主要规定什么"
+      ],
+      "topic": "劳动合同法",
+      "answer_template": "如果你想了解“{topic}”的整体规则，建议直接追问具体条款或具体场景，这样我能给你更稳定的答案。你可以继续问：“{example_query_1}”“{example_query_2}”“{example_query_3}”。",
+      "suggested_queries": [
+        "劳动合同必须包含哪些内容",
+        "试用期可以约定多久",
+        "经济补偿金怎么计算"
+      ],
+      "finish_reason": "faq_short_circuit"
+    }
+  ]
+}

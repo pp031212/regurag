@@ -1,0 +1,225 @@
+{
+  "_comment": "rules_cn 场景的知识库自动路由配置：区分培训管理与劳动法两大业务域，并提供知识库别名、优先词和布尔规则。",
+  "_profile_comment": "当 CONFIG_PROFILE=rules_cn 时，该文件会覆盖根目录下的通用路由配置。",
+  "domains": {
+    "labor_law": [
+      "劳动法",
+      "劳动合同法",
+      "劳动合同",
+      "试用期",
+      "工资",
+      "经济补偿",
+      "赔偿金",
+      "社保",
+      "离职",
+      "辞退"
+    ],
+    "training_management": [
+      "和鸣",
+      "规章制度",
+      "学生管理",
+      "请假",
+      "考勤",
+      "宿舍",
+      "迟到",
+      "旷课",
+      "班主任",
+      "退学"
+    ]
+  },
+  "categories": {
+    "legal": [
+      "劳动法",
+      "劳动合同法",
+      "劳动合同",
+      "试用期",
+      "工资",
+      "发工资",
+      "薪资",
+      "薪酬",
+      "劳动报酬",
+      "报酬",
+      "欠薪",
+      "拖欠工资",
+      "最低工资",
+      "辞退",
+      "解除劳动合同",
+      "赔偿金",
+      "经济补偿",
+      "社保",
+      "五险",
+      "加班",
+      "离职",
+      "仲裁",
+      "法条",
+      "法律"
+    ],
+    "regulation": [
+      "规章",
+      "制度",
+      "和鸣",
+      "考勤",
+      "迟到",
+      "旷课",
+      "宿舍",
+      "打架",
+      "请假",
+      "老师",
+      "班主任",
+      "退学",
+      "扣分",
+      "奖惩"
+    ]
+  },
+  "knowledge_base_rules": [
+    {
+      "name": "labor_law",
+      "match_any": [
+        "劳动相关法律",
+        "劳动&劳动合同",
+        "劳动法",
+        "劳动合同法"
+      ],
+      "category": "legal",
+      "aliases": [
+        "劳动法",
+        "劳动合同法",
+        "劳动合同",
+        "劳动仲裁"
+      ],
+      "priority_terms": [
+        "试用期",
+        "工资",
+        "赔偿金",
+        "经济补偿",
+        "社保",
+        "五险",
+        "加班",
+        "离职",
+        "辞退"
+      ],
+      "exclude_terms": [
+        "和鸣",
+        "宿舍",
+        "班主任",
+        "扣分",
+        "旷课"
+      ],
+      "query_rules": [
+        {
+          "name": "trial_salary",
+          "all_of": [
+            "试用期"
+          ],
+          "any_of": [
+            "工资",
+            "薪资",
+            "劳动报酬"
+          ],
+          "none_of": [
+            "宿舍",
+            "和鸣"
+          ],
+          "boost": 14
+        },
+        {
+          "name": "dismissal_compensation",
+          "all_of": [],
+          "any_of": [
+            "辞退",
+            "解除劳动合同",
+            "经济补偿",
+            "赔偿金"
+          ],
+          "none_of": [
+            "宿舍",
+            "考勤"
+          ],
+          "boost": 12
+        }
+      ]
+    },
+    {
+      "name": "heming_regulation",
+      "match_any": [
+        "和鸣教育管理制度",
+        "hemingRulesText",
+        "学生管理制度",
+        "规章制度"
+      ],
+      "category": "regulation",
+      "aliases": [
+        "和鸣",
+        "和鸣制度",
+        "规章制度",
+        "学生管理制度"
+      ],
+      "priority_terms": [
+        "考勤",
+        "请假",
+        "宿舍",
+        "迟到",
+        "旷课",
+        "奖惩",
+        "班主任",
+        "退学"
+      ],
+      "exclude_terms": [
+        "劳动法",
+        "劳动合同法",
+        "经济补偿",
+        "劳动仲裁",
+        "社保"
+      ],
+      "query_rules": [
+        {
+          "name": "leave_attendance",
+          "all_of": [
+            "请假"
+          ],
+          "any_of": [
+            "宿舍",
+            "考勤",
+            "迟到"
+          ],
+          "none_of": [
+            "劳动法",
+            "劳动合同法"
+          ],
+          "boost": 10
+        },
+        {
+          "name": "dormitory_discipline",
+          "all_of": [],
+          "any_of": [
+            "宿舍",
+            "打架",
+            "班主任"
+          ],
+          "none_of": [
+            "劳动法",
+            "工资"
+          ],
+          "boost": 9
+        }
+      ]
+    }
+  ],
+  "scores": {
+    "keyword_match": 8,
+    "metadata_term_min": 2,
+    "metadata_term_max": 6,
+    "preferred_knowledge_base": 2,
+    "category_match": 10,
+    "keep_requested_margin": 3,
+    "knowledge_base_alias_match": 12,
+    "knowledge_base_priority_match": 6,
+    "knowledge_base_exclude_penalty": 12
+  },
+  "embedding": {
+    "enabled": true,
+    "min_similarity": 0.45,
+    "min_margin": 0.03,
+    "profile_document_limit": 8
+  }
+}

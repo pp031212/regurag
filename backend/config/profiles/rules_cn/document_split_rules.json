@@ -1,0 +1,58 @@
+{
+  "_comment": "rules_cn 场景下的中文文档切分 profile：保留现有段落策略，并为 plain text / OCR text 增加更细的中文子句切分。",
+  "default_strategy": "generic_paragraph",
+  "default_sentence_profile": "generic_sentence",
+  "strategies": [
+    {
+      "name": "law_article",
+      "detection_patterns": [
+        "第[一二三四五六七八九十百千0-9]+条"
+      ],
+      "min_detection_matches": 2,
+      "boundary_pattern": "(?m)(?=^(?:第[一二三四五六七八九十百千0-9]+条)(?:\\s|$))"
+    },
+    {
+      "name": "regulation_rule",
+      "detection_patterns": [
+        "[一二三四五六七八九十]+、",
+        "扣分处理标准如下"
+      ],
+      "min_detection_matches": 2,
+      "boundary_pattern": "(?=(?:[一二三四五六七八九十]+、)|(?:扣分处理标准如下：?))"
+    },
+    {
+      "name": "generic_paragraph",
+      "detection_patterns": [],
+      "min_detection_matches": 0,
+      "boundary_pattern": "(?:\\r?\\n\\s*){2,}"
+    }
+  ],
+  "sentence_profiles": [
+    {
+      "name": "generic_sentence",
+      "source_formats": [],
+      "boundary_pattern": "(?<=[。！？；\\n])",
+      "fallback_boundary_patterns": [
+        "(?<=[，、：:,])",
+        "(?=(?:[（(][一二三四五六七八九十0-9]+[）)]|[一二三四五六七八九十]+、|\\d+[.．、]))",
+        "(?<=[）)])"
+      ]
+    },
+    {
+      "name": "zh_policy_sentence",
+      "source_formats": [
+        "plain",
+        "table",
+        "structured_text",
+        "image_ocr",
+        "image_ocr_table"
+      ],
+      "boundary_pattern": "(?<=[。！？；\\n])",
+      "fallback_boundary_patterns": [
+        "(?<=[，、：:,])",
+        "(?=(?:[（(][一二三四五六七八九十0-9]+[）)]|[一二三四五六七八九十]+、|\\d+[.．、]))",
+        "(?<=[）)])"
+      ]
+    }
+  ]
+}

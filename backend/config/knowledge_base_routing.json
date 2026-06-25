@@ -1,0 +1,41 @@
+{
+  "domains": {
+    "general": [
+      "规定",
+      "制度",
+      "规则",
+      "要求",
+      "流程",
+      "处理"
+    ]
+  },
+  "categories": {
+    "general": [
+      "规定",
+      "制度",
+      "规则",
+      "要求",
+      "流程",
+      "处理",
+      "说明"
+    ]
+  },
+  "knowledge_base_rules": [],
+  "scores": {
+    "keyword_match": 8,
+    "metadata_term_min": 2,
+    "metadata_term_max": 6,
+    "preferred_knowledge_base": 2,
+    "category_match": 10,
+    "keep_requested_margin": 3,
+    "knowledge_base_alias_match": 12,
+    "knowledge_base_priority_match": 6,
+    "knowledge_base_exclude_penalty": 12
+  },
+  "embedding": {
+    "enabled": true,
+    "min_similarity": 0.45,
+    "min_margin": 0.03,
+    "profile_document_limit": 8
+  }
+}
